@@ -1,64 +1,65 @@
-
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react'
-import './App.css'
-import { Button } from './components/ui/button'
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from './components/ui/sidebar'
+import { Calendar, Home, Inbox, Magnet, Search, Settings, Text } from "lucide-react";
+import "./App.css";
+import { Button } from "./components/ui/button";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "./components/ui/sidebar";
+import Dashboard from "./pages/Dashboard";
+import { Outlet } from "react-router-dom";
 
 function App() {
   const items = [
     {
-      title: "Home",
+      title: "Projects",
       url: "#",
       icon: Home,
     },
     {
-      title: "Inbox",
+      title: "Blog",
       url: "#",
-      icon: Inbox,
+      icon: Text,
     },
     {
-      title: "Calendar",
+      title: "Skill",
       url: "#",
-      icon: Calendar,
+      icon: Magnet,
     },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-    },
-  ]
-
+  ];
 
   return (
     <>
-      <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+    <Dashboard/>
+    <Outlet/>
+      {/* <Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <h3 className="text-lg">{item.title}</h3>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
