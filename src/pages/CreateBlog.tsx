@@ -1,14 +1,32 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const BlogUpload = () => {
-  const [title, setTitle] = useState('');
-  const [image, setImage] = useState('');
-  const [description, setDescription] = useState('');
-  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+  const [message, setMessage] = useState("");
+  const [blogs, setBlogs] = useState([]);
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const fetchBlogs = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/blogs");
+      const data = await response.json();
+      setBlogs(data); // Store fetched blogs in state
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs(); // Fetch blogs on component mount
+  }, []);
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    
+
     const blogData = {
       title,
       image,
@@ -16,64 +34,73 @@ const BlogUpload = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/blogs', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(blogData),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/v1/blogs/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(blogData),
+        }
+      );
 
       if (response.ok) {
-        setMessage('Blog uploaded successfully!');
-        // Reset form
-        setTitle('');
-        setImage('');
-        setDescription('');
+        // Reset form fields
+        setTitle("");
+        setImage("");
+        setDescription("");
+        toast.success("Blog uploaded to the portfolio.");
+
+        // Refetch blogs to update the list without refreshing the page
+        fetchBlogs();
       } else {
-        setMessage('Failed to upload the blog.');
+        setMessage("Failed to upload the blog.");
       }
     } catch (error) {
-      console.error('Error uploading blog:', error);
-      setMessage('Error uploading blog.');
+      console.error("Error uploading blog:", error);
+      setMessage("Error uploading blog.");
     }
   };
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Upload New Blog</h1>
+      <h1 className="text-2xl font-bold mb-4">Post a New Blog</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-lg">Title:</label>
-          <input 
-            type="text" 
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)} 
-            className="w-full p-2 border rounded" 
-            required 
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-2 border rounded"
+            placeholder="Blog Title"
+            required
           />
         </div>
         <div>
           <label className="block text-lg">Image URL:</label>
-          <input 
-            type="text" 
-            value={image} 
-            onChange={(e) => setImage(e.target.value)} 
-            className="w-full p-2 border rounded" 
-            required 
+          <input
+            type="text"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            className="w-full p-3 border rounded"
+            placeholder="Please provide an image url address"
+            // required
           />
         </div>
         <div>
           <label className="block text-lg">Description:</label>
-          <textarea 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)} 
-            className="w-full p-2 border rounded" 
-            // rows="4" 
-            required 
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-2 border rounded"
+            placeholder="Blog Description"
+            // rows="4"
+            required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button type="submit" className="bg-black text-white px-4 py-2 rounded">
           Upload Blog
         </button>
       </form>
