@@ -4,9 +4,9 @@ import CreateProject from "@/components/Projects/CreateProject"
 
 const Projects = () => {
   return (
-    <div className="w-full grid lg:grid-cols-2 grid-cols-1 gap-5">
-      <AllProjects/>
+    <div className="w-full">
       <CreateProject/>
+      <AllProjects/>
     </div>
   )
 }
