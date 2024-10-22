@@ -1,19 +1,21 @@
 import axios from "axios";
 import { useState } from "react";
-
+import { toast } from "sonner";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
-    title: '',
-    image: '',
-    description: '',
+    title: "",
+    image: "",
+    description: "",
     techStack: [] as string[],
-    repoLinkClient: '',
-    repoLinkServer: '',
-    liveLink: '',
+    repoLinkClient: "",
+    repoLinkServer: "",
+    liveLink: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -25,32 +27,38 @@ const CreateProject = () => {
     const value = e.target.value;
     setFormData((prevData) => ({
       ...prevData,
-      techStack: value.split(',').map((tech) => tech.trim()),
+      techStack: value.split(",").map((tech) => tech.trim()),
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/projects', formData);
-      console.log('Project created:', response.data);
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/projects/create",
+        formData
+      );
+      console.log("Project created:", response.data);
       // Optionally reset form
       setFormData({
-        title: '',
-        image: '',
-        description: '',
+        title: "",
+        image: "",
+        description: "",
         techStack: [],
-        repoLinkClient: '',
-        repoLinkServer: '',
-        liveLink: '',
+        repoLinkClient: "",
+        repoLinkServer: "",
+        liveLink: "",
       });
+      if (response) {
+        toast.success("Project added to the portfolio.");
+      }
     } catch (error) {
-      console.error('Error creating project:', error);
+      console.error("Error creating project:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white shadow-md rounded">
+    <form onSubmit={handleSubmit} className=" p-4 bg-white shadow-md rounded">
       <h2 className="text-lg font-semibold mb-4">Create New Project</h2>
 
       <div className="mb-4">
@@ -88,7 +96,9 @@ const CreateProject = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-sm font-medium">Tech Stack (comma separated)</label>
+        <label className="block text-sm font-medium">
+          Tech Stack (comma separated)
+        </label>
         <input
           type="text"
           name="techStack"
@@ -99,7 +109,9 @@ const CreateProject = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-sm font-medium">Client Repository Link</label>
+        <label className="block text-sm font-medium">
+          Client Repository Link
+        </label>
         <input
           type="url"
           name="repoLinkClient"
@@ -111,7 +123,9 @@ const CreateProject = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-sm font-medium">Server Repository Link</label>
+        <label className="block text-sm font-medium">
+          Server Repository Link
+        </label>
         <input
           type="url"
           name="repoLinkServer"
@@ -133,11 +147,14 @@ const CreateProject = () => {
         />
       </div>
 
-      <button type="submit" className="bg-blue-500 text-white rounded px-4 py-2">
+      <button type="submit" className="bg-black text-white rounded px-4 py-2">
         Create Project
       </button>
+      <span className="text-sm text-blue-300 ml-5">
+        NB: If the new blog does not visible, please refresh the page
+      </span>
     </form>
   );
-}
+};
 
-export default CreateProject
+export default CreateProject;
