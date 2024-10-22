@@ -11,12 +11,5 @@ import router from "./router/index.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router}/>
-    {/* <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        <App />
-      </main>
-    </SidebarProvider> */}
   </StrictMode>
 );
