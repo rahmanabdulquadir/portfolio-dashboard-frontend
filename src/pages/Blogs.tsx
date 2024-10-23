@@ -15,7 +15,7 @@ const Blogs = () => {
 
   // const fetchBlogs = async () => {
   //   try {
-  //     const response = await fetch("http://localhost:5000/api/v1/blogs");
+  //     const response = await fetch("https://portfolio-dashboard-server-kappa.vercel.app/api/v1/blogs");
   //     const data = await response.json();
   //     setBlogs(data);
   //   } catch (error) {
@@ -24,21 +24,23 @@ const Blogs = () => {
   // };
 
   // useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/v1/blogs");
-        const result = await response.json();
-        if (result.success) {
-          // Extract the 'data' array from the response
-          setBlogs(result.data);
-          console.log(result.data);
-        } else {
-          console.error(result.message);
-        }
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
+  const fetchBlogs = async () => {
+    try {
+      const response = await fetch(
+        "https://portfolio-dashboard-server-kappa.vercel.app/api/v1/blogs"
+      );
+      const result = await response.json();
+      if (result.success) {
+        // Extract the 'data' array from the response
+        setBlogs(result.data);
+        console.log(result.data);
+      } else {
+        console.error(result.message);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  };
 
   //   fetchBlogs();
   // }, []);
@@ -49,7 +51,9 @@ const Blogs = () => {
   return (
     <div className="w-full">
       <CreateBlog />
-      <span className="text-sm text-blue-300">NB: If the new blog does not visible, please refresh the page</span>
+      <span className="text-sm text-blue-300">
+        NB: If the new blog does not visible, please refresh the page
+      </span>
 
       <h2 className="text-center text-3xl font-bold py-10">/Blogs</h2>
 

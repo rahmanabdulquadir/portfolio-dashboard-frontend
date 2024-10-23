@@ -2,8 +2,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS for styling
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import Quill's CSS for styling
 
 const BlogUpload = () => {
   const [title, setTitle] = useState("");
@@ -14,7 +14,9 @@ const BlogUpload = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/v1/blogs");
+      const response = await fetch(
+        "https://portfolio-dashboard-server-kappa.vercel.app/api/v1/blogs"
+      );
       const data = await response.json();
       setBlogs(data); // Store fetched blogs in state
     } catch (error) {
@@ -37,7 +39,7 @@ const BlogUpload = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/v1/blogs/create",
+        "https://portfolio-dashboard-server-kappa.vercel.app/api/v1/blogs/create",
         {
           method: "POST",
           headers: {
@@ -64,7 +66,6 @@ const BlogUpload = () => {
       setMessage("Error uploading blog.");
     }
   };
-
 
   const refreshPage = () => {
     window.location.reload(); // This will reload the entire page
@@ -105,7 +106,11 @@ const BlogUpload = () => {
             // required
           />
         </div>
-        <button type="submit" onClick={refreshPage} className="bg-black text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          onClick={refreshPage}
+          className="bg-black text-white px-4 py-2 rounded"
+        >
           Upload Blog
         </button>
       </form>

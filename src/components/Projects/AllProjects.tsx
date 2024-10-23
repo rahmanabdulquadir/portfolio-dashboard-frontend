@@ -23,7 +23,9 @@ const AllProjects = () => {
   // https://portfolio-dashboard-server-kappa.vercel.app
   const fetchProjects = async () => {
     try {
-      const response = await fetch("https://portfolio-dashboard-server-kappa.vercel.app/api/v1/projects");
+      const response = await fetch(
+        "https://portfolio-dashboard-server-kappa.vercel.app/api/v1/projects"
+      );
       const data = await response.json();
       setProjects(data.data); // Assuming the response has a `data` property
     } catch (error) {
@@ -49,7 +51,7 @@ const AllProjects = () => {
     try {
       // Update the project in the backend using PATCH
       await axios.patch(
-        `http://localhost:5000/api/v1/projects/update/${updatedProject._id}`,
+        `https://portfolio-dashboard-server-kappa.vercel.app/api/v1/projects/update/${updatedProject._id}`,
         updatedProject
       );
 

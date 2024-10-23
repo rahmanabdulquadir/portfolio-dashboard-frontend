@@ -13,7 +13,6 @@ const CreateProject = () => {
     liveLink: "",
   });
 
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -36,7 +35,7 @@ const CreateProject = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/projects/create",
+        "https://portfolio-dashboard-server-kappa.vercel.app/api/v1/projects/create",
         formData
       );
       console.log("Project created:", response.data);
@@ -50,13 +49,11 @@ const CreateProject = () => {
         repoLinkServer: "",
         liveLink: "",
       });
-      toast.success("Project added to the portfolio.")
+      toast.success("Project added to the portfolio.");
     } catch (error) {
       console.error("Error creating project:", error);
     }
   };
-
- 
 
   // const refreshPage = () => {
   //   window.location.reload(); // This will reload the entire page
@@ -152,7 +149,7 @@ const CreateProject = () => {
         />
       </div>
 
-      <button type="submit"  className="bg-black text-white rounded px-4 py-2">
+      <button type="submit" className="bg-black text-white rounded px-4 py-2">
         Create Project
       </button>
       <span className="text-sm text-blue-300 ml-5">
