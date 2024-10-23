@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AddSkillForm from "./AddSkillForm";
 import SkillCard from "./SkillCard";
+import { toast } from "sonner";
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
@@ -11,6 +12,7 @@ const Skills = () => {
       const response = await fetch("http://localhost:5000/api/v1/skills");
       const data = await response.json();
       setSkills(data);
+      toast.success("New Skill Added to Portfolio")
     } catch (error) {
       console.error("Error fetching blogs:", error);
     }

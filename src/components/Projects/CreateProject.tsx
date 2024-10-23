@@ -50,10 +50,7 @@ const CreateProject = () => {
         repoLinkServer: "",
         liveLink: "",
       });
-      console.log(response)
-      if (response) {
-        toast.success("Project added to the portfolio.");
-      }
+      toast.success("Project added to the portfolio.")
     } catch (error) {
       console.error("Error creating project:", error);
     }

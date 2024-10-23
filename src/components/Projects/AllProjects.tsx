@@ -20,10 +20,10 @@ const AllProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [currentProject, setCurrentProject] = useState<Project | null>(null); // Track the current project to edit
-
+  // https://portfolio-dashboard-server-kappa.vercel.app
   const fetchProjects = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/v1/projects");
+      const response = await fetch("https://portfolio-dashboard-server-kappa.vercel.app/api/v1/projects");
       const data = await response.json();
       setProjects(data.data); // Assuming the response has a `data` property
     } catch (error) {
