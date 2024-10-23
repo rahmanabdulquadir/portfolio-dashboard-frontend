@@ -5,12 +5,17 @@ import Projects from "@/pages/Projects";
 import Skills from "@/pages/Skills";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import Home from "@/pages/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path:"/",
+        element: <Home/>
+      },
       {
         path: "/projects",
         element: (

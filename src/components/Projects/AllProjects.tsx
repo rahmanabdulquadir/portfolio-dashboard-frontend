@@ -5,7 +5,7 @@ import ProjectModal from "@/pages/ProjectModal";
 import axios from "axios";
 
 // Define the types for your project data
-interface Project {
+export interface Project {
   _id: string; // _id should be a string
   title: string;
   description: string;
@@ -19,8 +19,9 @@ interface Project {
 const AllProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [currentProject, setCurrentProject] = useState<Project | null>(null); // Track the current project to edit
-  // https://portfolio-dashboard-server-kappa.vercel.app
+  const [currentProject, setCurrentProject] = useState<Project | null>(null);
+
+
   const fetchProjects = async () => {
     try {
       const response = await fetch(

@@ -4,13 +4,13 @@ import SkillCard from "./SkillCard";
 import { toast } from "sonner";
 
 
-interface Skill {
+export interface Skill {
   name: string;
   estimate: number;
 }
 
 
-interface SkillApiResponse {
+export interface SkillApiResponse {
   data: Skill[];
 }
 

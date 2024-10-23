@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CreateBlog from "./CreateBlog";
 
-interface Blog {
+export interface Blog {
   _id: string;
   title: string;
   image: string;
@@ -10,20 +10,9 @@ interface Blog {
 }
 
 const Blogs = () => {
-  // Define the state with the blog type
+
   const [blogs, setBlogs] = useState<Blog[]>([]);
 
-  // const fetchBlogs = async () => {
-  //   try {
-  //     const response = await fetch("https://portfolio-dashboard-server-kappa.vercel.app/api/v1/blogs");
-  //     const data = await response.json();
-  //     setBlogs(data);
-  //   } catch (error) {
-  //     console.error("Error fetching blogs:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
   const fetchBlogs = async () => {
     try {
       const response = await fetch(
@@ -57,19 +46,37 @@ const Blogs = () => {
 
       <h2 className="text-center text-3xl font-bold py-10">/Blogs</h2>
 
-      <div className="text-center grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {blogs.length > 0 ? (
-          blogs.map((blog) => (
-            <div key={blog._id}>
-              <h2>{blog.title}</h2>
-              <img src={blog.image} alt={blog.title} />
-              <p>{blog.description}</p>
-            </div>
-          ))
-        ) : (
-          <p>No blogs available.</p>
-        )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 lg:px-0">
+  {blogs.length > 0 ? (
+    blogs.map((blog) => (
+      <div
+        key={blog._id}
+        className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      >
+        {/* Blog Image */}
+        <img
+          src={blog.image}
+          alt={blog.title}
+          className="w-full h-48 object-cover"
+        />
+        {/* Blog Content */}
+        <div className="p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">{blog.title}</h2>
+          <p className="text-gray-600 mb-4">{blog.description}</p>
+          {/* Optional read more link */}
+          <a
+            href={`/blogs/${blog._id}`}
+            className="text-blue-500 hover:text-blue-600 font-semibold"
+          >
+            Read More →
+          </a>
+        </div>
       </div>
+    ))
+  ) : (
+    <p className="text-center text-gray-500">No blogs available.</p>
+  )}
+</div>
     </div>
   );
 };
