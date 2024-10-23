@@ -45,7 +45,7 @@ const AddSkillForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto bg-white p-6 shadow-lg rounded-lg"
+      className="max-w-md mx-auto p-6  rounded-lg"
     >
       <div className="mb-4">
         <label

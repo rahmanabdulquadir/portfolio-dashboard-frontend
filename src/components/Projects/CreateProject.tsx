@@ -60,7 +60,7 @@ const CreateProject = () => {
   // };
 
   return (
-    <form onSubmit={handleSubmit} className=" p-4 bg-white shadow-md rounded">
+    <form onSubmit={handleSubmit} className=" p-4 lg:w-[80%] rounded">
       <h2 className="text-lg font-semibold mb-4">Create New Project</h2>
 
       <div className="mb-4">
