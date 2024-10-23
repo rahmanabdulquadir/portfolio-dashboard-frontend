@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/rules-of-hooks */
+ 
+ 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ReactQuill from "react-quill";
@@ -10,7 +10,7 @@ const BlogUpload = () => {
   const [image, setImage] = useState("");
   const [description, setDescription] = useState(""); // This will store the rich text content
   const [message, setMessage] = useState("");
-  const [blogs, setBlogs] = useState([]);
+  const [, setBlogs] = useState([]);
 
   const fetchBlogs = async () => {
     try {

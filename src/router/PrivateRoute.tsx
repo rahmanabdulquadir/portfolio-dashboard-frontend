@@ -6,12 +6,15 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+  // Explicitly check the value of `isAuthenticated`
   const isAuthenticated = localStorage.getItem("isAuthenticated");
 
-  if (!isAuthenticated) {
+  // If not authenticated, navigate to the login page
+  if (!isAuthenticated || isAuthenticated === "false") {
     return <Navigate to="/login" />;
   }
 
+  // Return the children if authenticated
   return <>{children}</>;
 };
 
