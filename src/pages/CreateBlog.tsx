@@ -2,11 +2,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS for styling
 
 const BlogUpload = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(""); // This will store the rich text content
   const [message, setMessage] = useState("");
   const [blogs, setBlogs] = useState([]);
 
@@ -30,7 +32,7 @@ const BlogUpload = () => {
     const blogData = {
       title,
       image,
-      description,
+      description, // Send the rich text content
     };
 
     try {
@@ -49,7 +51,7 @@ const BlogUpload = () => {
         // Reset form fields
         setTitle("");
         setImage("");
-        setDescription("");
+        setDescription(""); // Reset rich text content
         toast.success("Blog uploaded to the portfolio.");
 
         // Refetch blogs to update the list without refreshing the page
@@ -63,6 +65,10 @@ const BlogUpload = () => {
     }
   };
 
+
+  const refreshPage = () => {
+    window.location.reload(); // This will reload the entire page
+  };
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Post a New Blog</h1>
@@ -85,22 +91,21 @@ const BlogUpload = () => {
             value={image}
             onChange={(e) => setImage(e.target.value)}
             className="w-full p-3 border rounded"
-            placeholder="Please provide an image url address"
-            // required
+            placeholder="Please provide an image URL"
           />
         </div>
         <div>
           <label className="block text-lg">Description:</label>
-          <textarea
+          {/* Replace textarea with ReactQuill for rich text editing */}
+          <ReactQuill
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={setDescription}
             className="w-full p-2 border rounded"
             placeholder="Blog Description"
-            // rows="4"
-            required
+            // required
           />
         </div>
-        <button type="submit" className="bg-black text-white px-4 py-2 rounded">
+        <button type="submit" onClick={refreshPage} className="bg-black text-white px-4 py-2 rounded">
           Upload Blog
         </button>
       </form>

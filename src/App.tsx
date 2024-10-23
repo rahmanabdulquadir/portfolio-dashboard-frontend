@@ -10,7 +10,7 @@ function App() {
         <AppSidebar />
         <main className="w-full">
           <SidebarTrigger />
-          <div className="flex">
+          <div className="flex bg-[url('./grid.png')] bg-fixed bg-cover bg-yellow-100">
             <Dashboard />
             <Outlet />
           </div>
