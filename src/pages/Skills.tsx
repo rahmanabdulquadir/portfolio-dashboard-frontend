@@ -1,7 +1,10 @@
+import AddSkillForm from "./AddSkillForm"
 
 const Skills = () => {
   return (
-    <div>Skills</div>
+    <div>
+      <AddSkillForm/>
+    </div>
   )
 }
 
