@@ -1,71 +1,109 @@
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import ProjectModal from "@/pages/ProjectModal";
+import axios from "axios";
+
+// Define the types for your project data
+interface Project {
+  _id: string; // Change `id` to `_id` to match your backend
+  title: string;
+  description: string;
+  techStack: string[];
+  repoLinkClient: string;
+  repoLinkServer: string;
+  liveLink: string;
+  image?: string; // Optional property for image URL
+}
 
 const AllProjects = () => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [currentProject, setCurrentProject] = useState<Project | null>(null); // Track the current project to edit
 
-
-  const fetchBlogs = async () => {
+  const fetchProjects = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/v1/projects");
       const data = await response.json();
-      setProjects(data);
+      setProjects(data.data); // Assuming the response has a `data` property
     } catch (error) {
-      console.error("Error fetching blogs:", error);
+      console.error("Error fetching projects:", error);
     }
   };
 
   useEffect(() => {
-    fetchBlogs();
+    fetchProjects(); // Fetch projects on component mount
   }, []);
-  return(
-    <div id="projects" className="space-x-y">
-    <div>
-      <h2
-       
-        className="lg:text-5xl text-2xl lg:text-start text-center pt-10 text-[#48dd70] font-bold mb-12"
-      >
+
+  const handleOpenModal = (project: Project) => {
+    setCurrentProject(project); // Set the current project to edit
+    setModalOpen(true); // Open the modal
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false); // Close the modal
+    setCurrentProject(null); // Reset the current project
+  };
+
+  const handleUpdate = async (updatedProject: Project) => {
+    try {
+      // Update the project in the backend using PATCH
+      await axios.patch(`http://localhost:5000/api/v1/projects/update/${updatedProject._id}`, updatedProject);
+      
+      // Refetch the projects to update the list
+      fetchProjects();
+      handleCloseModal(); // Close the modal after successful update
+    } catch (error) {
+      console.error("Error updating project:", error.response?.data || error.message);
+    }
+  };
+
+  return (
+    <div id="projects" className="space-y-4">
+      <h2 className="lg:text-5xl text-2xl lg:text-start text-center pt-10 text-[#48dd70] font-bold mb-12">
         / projects
       </h2>
 
-      <div
-        
-        className="grid grid-cols-1 place-items-center lg:grid-cols-3 gap-10 justify-center items-center mt-10"
-      >
-        {projects?.data?.map((project) => (
+      <div className="grid grid-cols-1 place-items-center lg:grid-cols-3 gap-10 justify-center items-center mt-10">
+        {projects?.map((project) => (
           <div
-            key={project.id}
+            key={project._id}
             className="project-card group w-80 h-96 bg-gray-300 shadow-lg rounded-lg overflow-hidden relative transform transition-transform duration-500 hover:scale-105"
           >
             <img
-              src="https://via.placeholder.com/320x180"
+              src={project.image || "https://via.placeholder.com/320x180"} // Use project image or placeholder
               alt="Project Image"
               className="w-full h-40 object-cover"
             />
-            {/* Card Content */}
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-2">{project.title}</h2>
-              <p className="text-gray-600 mb-4 h-20">
-                {project.description}
-              </p>
+              <p className="text-gray-600 mb-4 h-20">{project.description}</p>
               <div className="flex justify-between">
-                {/* <Button href={project.liveLink} target="_blank">
-                  <a
-                    href={project.liveLink}
-                    target="_blank"
-                    className="text-white-500 hover:text-blue-600 font-semibold transition-colors duration-300"
-                  >
-                    Live link
-                  </a>
-                </Button> */}
-                
+                <Button onClick={() => handleOpenModal(project)}>Edit</Button>
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Modal to update project */}
+      {isModalOpen && currentProject && (
+        <ProjectModal
+          projectId={currentProject._id} // Current project ID
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          initialData={{
+            title: currentProject.title,
+            description: currentProject.description,
+            techStack: currentProject.techStack,
+            repoLinkClient: currentProject.repoLinkClient,
+            repoLinkServer: currentProject.repoLinkServer,
+            liveLink: currentProject.liveLink,
+          }}
+          onUpdate={handleUpdate} // Callback to refresh the project list
+        />
+      )}
     </div>
-  </div>
-  )
+  );
 };
 
 export default AllProjects;

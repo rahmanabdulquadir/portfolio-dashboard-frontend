@@ -38,6 +38,10 @@ const AddSkillForm = () => {
     }
   };
 
+  const refreshPage = () => {
+    window.location.reload(); // This will reload the entire page
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -83,6 +87,7 @@ const AddSkillForm = () => {
 
       <button
         type="submit"
+        onClick={refreshPage}
         className="w-full bg-black text-white py-3 rounded-md hover:bg-indigo-600 transition duration-300 ease-in-out font-semibold"
       >
         Add Skill

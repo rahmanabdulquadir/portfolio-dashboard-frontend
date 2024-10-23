@@ -12,6 +12,8 @@ const CreateProject = () => {
     repoLinkServer: "",
     liveLink: "",
   });
+  const [isModalOpen, setModalOpen] = useState(false);
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,6 +57,12 @@ const CreateProject = () => {
     } catch (error) {
       console.error("Error creating project:", error);
     }
+  };
+
+ 
+
+  const refreshPage = () => {
+    window.location.reload(); // This will reload the entire page
   };
 
   return (
@@ -147,7 +155,7 @@ const CreateProject = () => {
         />
       </div>
 
-      <button type="submit" className="bg-black text-white rounded px-4 py-2">
+      <button type="submit" onClick={refreshPage} className="bg-black text-white rounded px-4 py-2">
         Create Project
       </button>
       <span className="text-sm text-blue-300 ml-5">
