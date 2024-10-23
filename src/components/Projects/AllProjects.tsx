@@ -5,7 +5,7 @@ import axios from "axios";
 
 // Define the types for your project data
 interface Project {
-  _id: string; // Change `id` to `_id` to match your backend
+  _id: string; // _id should be a string
   title: string;
   description: string;
   techStack: string[];
@@ -14,7 +14,6 @@ interface Project {
   liveLink: string;
   image?: string; // Optional property for image URL
 }
-
 const AllProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);

@@ -80,3 +80,88 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+
+
+
+/* Modal overlay styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+/* Modal content styles */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  width: 90%;
+  max-width: 500px; /* Max width for the modal */
+}
+
+/* Modal title styles */
+.modal-title {
+  font-size: 24px; /* Font size for title */
+  margin-bottom: 20px; /* Spacing below title */
+}
+
+/* Form group styles */
+.form-group {
+  margin-bottom: 15px; /* Spacing between form groups */
+}
+
+label {
+  display: block; /* Labels on new line */
+  margin-bottom: 5px; /* Spacing below labels */
+  font-weight: bold; /* Bold labels */
+}
+
+input[type="text"],
+input[type="url"],
+textarea {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding for input fields */
+  border: 1px solid #ccc; /* Border for input fields */
+  border-radius: 4px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Button styles */
+.submit-button {
+  background-color: #48dd70; /* Primary button color */
+  color: white;
+  border: none;
+  padding: 10px 15px; /* Padding for buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer on hover */
+}
+
+.submit-button:hover {
+  background-color: #3fbc63; /* Darken on hover */
+}
+
+.close-button {
+  margin-top: 10px; /* Spacing above the close button */
+  background-color: #f44336; /* Close button color */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #d32f2f; /* Darken on hover */
+}
