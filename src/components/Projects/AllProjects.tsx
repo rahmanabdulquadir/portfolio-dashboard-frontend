@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import ProjectModal from "@/pages/ProjectModal";
@@ -11,9 +12,10 @@ interface Project {
   techStack: string[];
   repoLinkClient: string;
   repoLinkServer: string;
-  liveLink: string;
+  liveLink?: string; // Optional property for live link
   image?: string; // Optional property for image URL
 }
+
 const AllProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -46,13 +48,19 @@ const AllProjects = () => {
   const handleUpdate = async (updatedProject: Project) => {
     try {
       // Update the project in the backend using PATCH
-      await axios.patch(`http://localhost:5000/api/v1/projects/update/${updatedProject._id}`, updatedProject);
-      
+      await axios.patch(
+        `http://localhost:5000/api/v1/projects/update/${updatedProject._id}`,
+        updatedProject
+      );
+
       // Refetch the projects to update the list
       fetchProjects();
       handleCloseModal(); // Close the modal after successful update
-    } catch (error) {
-      console.error("Error updating project:", error.response?.data || error.message);
+    } catch (error: any) {
+      console.error(
+        "Error updating project:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -63,7 +71,7 @@ const AllProjects = () => {
       </h2>
 
       <div className="grid grid-cols-1 place-items-center lg:grid-cols-3 gap-10 justify-center items-center mt-10">
-        {projects?.map((project) => (
+        {projects.map((project) => (
           <div
             key={project._id}
             className="project-card group w-80 h-96 bg-gray-300 shadow-lg rounded-lg overflow-hidden relative transform transition-transform duration-500 hover:scale-105"
@@ -96,7 +104,7 @@ const AllProjects = () => {
             techStack: currentProject.techStack,
             repoLinkClient: currentProject.repoLinkClient,
             repoLinkServer: currentProject.repoLinkServer,
-            liveLink: currentProject.liveLink,
+            liveLink: currentProject.liveLink || "", // Provide default value if undefined
           }}
           onUpdate={handleUpdate} // Callback to refresh the project list
         />

@@ -12,7 +12,6 @@ const CreateProject = () => {
     repoLinkServer: "",
     liveLink: "",
   });
-  const [isModalOpen, setModalOpen] = useState(false);
 
 
   const handleChange = (
@@ -51,6 +50,7 @@ const CreateProject = () => {
         repoLinkServer: "",
         liveLink: "",
       });
+      console.log(response)
       if (response) {
         toast.success("Project added to the portfolio.");
       }
@@ -61,9 +61,9 @@ const CreateProject = () => {
 
  
 
-  const refreshPage = () => {
-    window.location.reload(); // This will reload the entire page
-  };
+  // const refreshPage = () => {
+  //   window.location.reload(); // This will reload the entire page
+  // };
 
   return (
     <form onSubmit={handleSubmit} className=" p-4 bg-white shadow-md rounded">
@@ -155,7 +155,7 @@ const CreateProject = () => {
         />
       </div>
 
-      <button type="submit" onClick={refreshPage} className="bg-black text-white rounded px-4 py-2">
+      <button type="submit"  className="bg-black text-white rounded px-4 py-2">
         Create Project
       </button>
       <span className="text-sm text-blue-300 ml-5">

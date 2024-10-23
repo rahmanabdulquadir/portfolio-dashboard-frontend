@@ -1,28 +1,46 @@
 import App from "@/App";
 import Blogs from "@/pages/Blogs";
+import Login from "@/pages/Login";
 import Projects from "@/pages/Projects";
 import Skills from "@/pages/Skills";
 import { createBrowserRouter } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: "/projects",
-        element: <Projects />,
+        element: (
+          <PrivateRoute>
+            <Projects />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blogs",
-        element: <Blogs />,
+        element: (
+          <PrivateRoute>
+            <Blogs />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/skills",
-        element: <Skills />,
+        element: (
+          <PrivateRoute>
+            <Skills />
+          </PrivateRoute>
+        ),
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login />,
+  },
 ]);
 
-export default router
+export default router;

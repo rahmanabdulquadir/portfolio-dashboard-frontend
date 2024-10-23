@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 interface ProjectModalProps {
-  projectId: string | undefined;
+  projectId: string; // Assuming projectId will always be defined when modal is open
   isOpen: boolean;
   onClose: () => void;
   initialData: {
@@ -10,16 +10,16 @@ interface ProjectModalProps {
     techStack: string[];
     repoLinkClient: string;
     repoLinkServer: string;
-    liveLink: string;
+    liveLink?: string; // Making this optional
   };
   onUpdate: (updatedProject: {
-    _id: string | undefined;
+    _id: string;
     title: string;
     description: string;
     techStack: string[];
     repoLinkClient: string;
     repoLinkServer: string;
-    liveLink: string;
+    liveLink?: string; // Making this optional as well
   }) => void;
 }
 
@@ -30,12 +30,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   initialData,
   onUpdate,
 }) => {
-  const [title, setTitle] = useState(initialData.title);
-  const [description, setDescription] = useState(initialData.description);
+  const [title, setTitle] = useState<string>(initialData.title);
+  const [description, setDescription] = useState<string>(initialData.description);
   const [techStack, setTechStack] = useState<string[]>(initialData.techStack);
-  const [repoLinkClient, setRepoLinkClient] = useState(initialData.repoLinkClient);
-  const [repoLinkServer, setRepoLinkServer] = useState(initialData.repoLinkServer);
-  const [liveLink, setLiveLink] = useState(initialData.liveLink);
+  const [repoLinkClient, setRepoLinkClient] = useState<string>(initialData.repoLinkClient);
+  const [repoLinkServer, setRepoLinkServer] = useState<string>(initialData.repoLinkServer);
+  const [liveLink, setLiveLink] = useState<string | undefined>(initialData.liveLink);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,10 +47,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
       techStack,
       repoLinkClient,
       repoLinkServer,
-      liveLink,
+      liveLink, // This can now be undefined if not provided
     };
 
     await onUpdate(updatedProject); // Pass updated project to the handler
+    onClose(); // Close the modal after submission
   };
 
   // Reset form fields when modal opens
@@ -61,7 +62,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
       setTechStack(initialData.techStack);
       setRepoLinkClient(initialData.repoLinkClient);
       setRepoLinkServer(initialData.repoLinkServer);
-      setLiveLink(initialData.liveLink);
+      setLiveLink(initialData.liveLink); // Should work correctly
     }
   }, [isOpen, initialData]);
 
@@ -119,8 +120,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               <label>Live Link:</label>
               <input
                 type="url"
-                value={liveLink}
-                onChange={(e) => setLiveLink(e.target.value)}
+                value={liveLink || ""} // Default to empty string if undefined
+                onChange={(e) => setLiveLink(e.target.value || undefined)} // Set as undefined if empty
               />
             </div>
             <button type="submit" className="submit-button">Update Project</button>

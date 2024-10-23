@@ -41,8 +41,10 @@ const Dashboard = () => {
                     <a href={item.url}>
                       <item.icon />
                       <h3 className="text-lg">{item.title}</h3>
+                      
                     </a>
                   </SidebarMenuButton>
+                  
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
